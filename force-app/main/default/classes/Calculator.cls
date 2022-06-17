@@ -6,4 +6,13 @@ public with sharing class Calculator {
     {
         return a+b;
     }
+
+    public integer subtract(Integer a,Integer b)
+    {
+        return a-b;
+    }
+    public integer mul(Integer a,Integer b)
+    {
+        return a*b;
+    }
 }
