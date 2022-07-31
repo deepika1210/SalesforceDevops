@@ -1,0 +1,24 @@
+<apex:page >
+    <input id="select-all" type="checkbox" name="select-all-cam"/>
+<span class="txt-label">Select All</span>
+
+<div class="list">
+    <ul>
+        <li>
+            <input id="cam-1" type="checkbox" name="select-cam"/>
+            <label for="cam-1">item1</label>
+        </li>
+        <li>
+            <input id="cam-2" type="checkbox" name="select-cam"/>
+            <label for="cam-2">item2</label>
+        </li>
+
+    </ul>
+</div>
+<script>
+$('.list input[type="checkbox"]').on('change', function () {
+  var allChecked = $('.list input:checked').length === $('.list input').length;
+  $('#select-all').prop('checked', allChecked);
+});
+    </script>
+</apex:page>

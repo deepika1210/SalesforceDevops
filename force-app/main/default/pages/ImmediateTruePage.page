@@ -1,0 +1,18 @@
+<apex:page standardController="Account" extensions="ImmediateTrueController" >
+
+<apex:form >
+ <apex:pageBlock >
+ <apex:pageBlockButtons location="both">
+ <apex:commandButton value="Save" action="{!savebutton}"/>
+ <apex:commandButton value="Cancel" immediate="true" action="{!cancelbutton}"/>
+ </apex:pageBlockButtons>
+ <apex:pageBlockSection >
+ <apex:inputField value="{!account.name}"/>
+ <apex:inputfield value="{!account.Type}" required="true"/>
+ </apex:pageBlockSection>
+ <apex:outputText value="Account Added succesfully" rendered="{!flag1}"/>
+ <apex:outputText value="Account failed to be Added" rendered="{!flag2}"/>
+ </apex:pageBlock>
+ </apex:form>
+
+</apex:page>

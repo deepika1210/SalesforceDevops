@@ -1,0 +1,41 @@
+<apex:page >
+    <html>
+        <head>
+            <script>
+            checkboxes = document.getElementsByTagName("input"); 
+
+for (var i = 0; i < checkboxes.length; i++) {
+    var checkbox = checkboxes[i];
+    checkbox.onclick = function() {
+        var currentRow = this.parentNode.parentNode;
+        var secondColumn = currentRow.getElementsByTagName("td")[1];
+
+        alert("My text is: " + secondColumn.textContent );
+    };
+} 
+            </script>
+        </head>
+        <body>
+            
+            <table>
+    <thead>
+        <tr><th></th><th>Row Text</th></tr>
+    </thead>
+    <tr>
+        <td><input type="checkbox" /></td>
+        <td>Test</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" /></td>
+        <td>Test 2</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" /></td>
+        <td>Test 3</td>
+    </tr>
+</table>
+        </body>
+    </html>
+    
+    
+</apex:page>

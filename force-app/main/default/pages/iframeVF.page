@@ -1,0 +1,22 @@
+<!--<apex:page >
+    
+    <apex:iframe src="https://www.salesforce.com" scrolling="true" id="theIframe"/>
+<apex:pageBlock >
+        <apex:iframe src="https://www.salesforce.com" scrolling="true" id="theIframe"/> 
+    </apex:pageBlock>
+
+<iframe height="600px" id="theIframe" name="theIframe" src="https://www.salesforce.com" width="100%"></iframe>
+</apex:page>-->
+<apex:page sidebar="false">
+    <apex:iframe src="http://www.salesforce.com/" id="theFrame" />
+    <style>table#bodyTable {border-collapse: collapse;} table#bodyTable td {padding: 0;}</style>
+    <script>
+    (function() { //this wrapper prevents pollution of the global scope
+        var windowOnresize = window.onresize;
+        window.onresize = function() {
+            if (windowOnresize) windowOnresize(); //don't trample the handler; intercept it
+            document.getElementById('theFrame').height = window.innerHeight - 220;
+        };
+    }());
+</script>
+</apex:page>

@@ -1,0 +1,21 @@
+<apex:page controller="RESTFetchSingleRecController">
+  <apex:form >
+<apex:pageBlock >
+
+ <apex:pageblockButtons >
+ <apex:commandButton value="Get access Token" action="{!getRequestToken}"/>
+ <apex:commandButton value="Get Account name" action="{!getRecord}"/>
+  <apex:commandButton value="Create a record" action="{!createRecord}"/>
+   <apex:commandButton value="Update record" action="{!updateRecord}"/>
+   <apex:commandButton value="Delete record" action="{!deleteRecord}"/>
+   
+ 
+ </apex:pageblockButtons>
+  <apex:pageblocktable value="{!listWrap}" var="a" >
+
+<apex:column value="{!a.name}" headerValue="Name"/>
+</apex:pageBlockTable>
+
+ </apex:pageBlock>
+ </apex:form>
+</apex:page>

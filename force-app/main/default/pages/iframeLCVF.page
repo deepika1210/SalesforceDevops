@@ -1,0 +1,9 @@
+<apex:page controller="showData" showHeader="false" standardStylesheets="false">
+    <script>
+  alert('alert show after vf page reload');
+  </script>
+    Testing Text on vf page  
+    <apex:form >
+        <apex:outputText value="{!cnval}"/>
+    </apex:form>
+</apex:page>

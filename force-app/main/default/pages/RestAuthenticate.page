@@ -1,0 +1,8 @@
+<apex:page controller="RestAuthenticateController">
+ <apex:form >
+    
+     <apex:commandButton value="GetToken" action="{!getToken}" /> {! jsonResponse} 
+         <apex:commandButton value="GetOpp" action="{!getopp}" /> 
+    
+ </apex:form> 
+</apex:page>

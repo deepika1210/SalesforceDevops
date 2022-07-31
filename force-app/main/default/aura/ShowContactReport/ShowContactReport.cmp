@@ -1,0 +1,5 @@
+<aura:component controller="ShowContactReportController">
+	<!--<ltng:require scripts="{!$Resource.chartjs}" afterScriptsLoaded="{!c.createPlannedchart}"/>
+<canvas id="chartCanvas" height="300" width="300"></canvas>-->
+    <a target="blank" href="urlPlannedreport">View Report </a>
+</aura:component>

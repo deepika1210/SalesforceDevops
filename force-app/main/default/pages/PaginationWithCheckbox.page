@@ -1,0 +1,163 @@
+<apex:page doctype="html-5.0" title="Sample Visualforce Paging With CheckBox Example" controller="PagingWithCheckBox" tabstyle="Account" sidebar="false" readonly="true" cache="false">
+    <apex:sectionheader title="Account" subtitle="Paging Accounts"></apex:sectionheader>
+    <apex:form >
+        <apex:pageblock title="View Selected Account" id="idSearchProduct">
+            <apex:commandbutton value="View Selected Accounts" action="{!showPopup}" rerender="tstpopup"></apex:commandbutton>
+        </apex:pageblock>
+      
+     <apex:outputpanel id="tstpopup">
+        <apex:outputpanel styleclass="popupBackground" layout="block" rendered="{!displayPopUp}"></apex:outputpanel>
+            <apex:outputpanel styleclass="custPopup" layout="block" rendered="{!displayPopUp}">
+                <apex:pageblock >
+               <apex:pageblocktable id="pbSelectedAccounts" value="{!objSelectedAccounts}" var="a">
+                            <apex:column value="{!a.Name}" headervalue="Account Name"></apex:column>
+                            <apex:column value="{!a.AccountNumber}" headervalue="Account Number"></apex:column>
+                            <apex:column value="{!a.Industry}" headervalue="Industry"></apex:column>
+                            <apex:column value="{!a.Website}" headervalue="Website"></apex:column>
+                        </apex:pageblocktable>
+                
+               <center>
+                <apex:commandbutton value="Close Popup" action="{!closePopup}" rerender="tstpopup"></apex:commandbutton>
+                               </center>
+                </apex:pageblock>
+            </apex:outputpanel>
+        </apex:outputpanel>
+          
+        <apex:pageblock title="Accounts">
+            <apex:pageblocksection columns="1">
+                <apex:facet name="body">
+                    <apex:outputpanel layout="none">
+                        <apex:pageblocktable id="pbAccounts" value="{!AccountList}" var="a">
+                            <apex:column >
+                                <apex:inputcheckbox value="{!a.IsSelected}"></apex:inputcheckbox>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Account Name</apex:facet> 
+                                <apex:outputlink value="/{!a.AccountId}">{!a.AccountName}</apex:outputlink>
+                            </apex:column>
+                            <apex:column value="{!a.AccountNumber}" headervalue="Account Number"></apex:column>
+                            <apex:column value="{!a.Industry}" headervalue="Industry"></apex:column>
+                            <apex:column value="{!a.Website}" headervalue="Website"></apex:column>
+                        </apex:pageblocktable>
+                         <apex:outputpanel layout="block" styleclass="listViewport">
+ 
+ 
+<div class="bottomNav">
+ 
+ 
+<div class="paginator">
+                                        <apex:panelgrid id="gridPaging" columns="3" width="100%" columnclasses="left, center, right">
+                                            <apex:panelgroup >
+                                                <span class="selectorTarget">
+                                                    <strong>{!LNumber}-{!UNumber} of {!RecordCount}</strong>
+                                                </span>
+                                                <span>  </span>
+                                                <span>
+                                                    <strong>Total {!RecordCount} records</strong>
+                                                </span>
+                                                <span>  </span>
+                                                <!--<apex:actionstatus id="statusPaging">
+                                                    <apex:facet name="start">
+                                                        <img src="/img/loading.gif" height="14px" width="14px"/></img>
+                                                    </apex:facet>
+                                                    <apex:facet name="stop">
+                                                        <img src="/img/s.gif" height="14px" width="14px"/></img>
+                                                    </apex:facet>
+                                                </apex:actionstatus> -->                              
+                                            </apex:panelgroup>
+                                            <apex:panelgroup >
+                                                <span class="prevNextLinks">
+                                                    <span class="prevNext">
+                                                        <apex:commandlink id="linkMoveFirst" status="statusPaging" action="{!First}" rerender="gridPaging, pbAccounts" rendered="{!allowMovePrev}">
+                                                           <img src="/s.gif" title="First" alt="First" class="first"></img>
+                                                        </apex:commandlink>
+                                      
+                                                        <apex:outputpanel layout="none" rendered="{!NOT(allowMovePrev)}">
+                                                            <apex:image url="/s.gif" title="First" alt="First" styleclass="firstoff"></apex:image>
+                                                        </apex:outputpanel>
+                                                    </span>
+                                                      
+                                                    <span class="prevNext">
+                                                        <apex:commandlink id="linkMovePrev" title="Previous" status="statusPaging" action="{!Prev}" rerender="gridPaging, pbAccounts" rendered="{!allowMovePrev}">
+                                                            <img src="/s.gif" title="Previous" alt="Previous" class="prev"></img>
+                                                            <span>Previous</span>
+                                                        </apex:commandlink>
+                                                        <apex:outputpanel layout="none" rendered="{!NOT(allowMovePrev)}">
+                                                            <apex:image url="/s.gif" title="Previous" alt="Previous" styleclass="prevoff"></apex:image>
+                                                            <span>Previous</span>
+                                                        </apex:outputpanel>
+                                                    </span>
+                              
+                                                    <span class="prevNext">
+                                                        <apex:commandlink id="linkMoveNext" title="Next" status="statusPaging" action="{!Next}" rerender="gridPaging, pbAccounts" rendered="{!allowMoveNext}">
+                                                            <span>Next</span>
+                                                            <img src="/s.gif" title="Next" alt="Next" class="next"></img>
+                                                        </apex:commandlink>
+                              
+                                                        <apex:outputpanel layout="none" rendered="{!NOT(allowMoveNext)}">
+                                                            <span>Next</span>
+                                                            <apex:image url="/s.gif" title="Next" alt="Next" styleclass="nextoff"></apex:image>
+                                                        </apex:outputpanel>
+                                                    </span>
+                              
+                                                    <span class="prevNext">
+                                                        <apex:commandlink id="linkMoveLast" status="statusPaging" action="{!Last}" rerender="gridPaging, pbAccounts" rendered="{!allowMoveNext}">
+                                                            <img src="/s.gif" title="Last" alt="Last" class="last"></img>
+                                                        </apex:commandlink>
+                              
+                                                        <apex:outputpanel layout="none" rendered="{!NOT(allowMoveNext)}">
+                                                            <apex:image url="/s.gif" title="Last" alt="Last" styleclass="lastoff"></apex:image>
+                                                        </apex:outputpanel>
+                                                    </span>
+                                                </span>
+                                            </apex:panelgroup>
+                                            <apex:panelgroup >
+                                                <span class="selectorTarget">
+                                                    <strong> Page {!PageNumber} of {!PageCount}</strong>
+                                                </span>
+                                            </apex:panelgroup>
+                                        </apex:panelgrid> 
+                                     </div>
+ 
+ 
+                                </div>
+ 
+ 
+                            </apex:outputpanel>
+                    </apex:outputpanel>
+                </apex:facet>
+            </apex:pageblocksection>
+        </apex:pageblock>
+    </apex:form>
+      
+ 
+ 
+<style type="text/css">
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;         
+            width: 700px;
+            margin-left: -320px;
+            top:100px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+  
+    </style>
+ 
+ 
+</apex:page>

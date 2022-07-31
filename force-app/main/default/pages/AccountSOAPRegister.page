@@ -1,0 +1,41 @@
+<apex:page controller="AccountSOAPRegisterController" tabStyle="Account">
+  <apex:form >
+  <apex:actionRegion >
+  <apex:outputText value="{!statusmsg}" style="color:green;"/>
+  <apex:outputText label="Enter City"></apex:outputText>&nbsp;
+  <apex:inputText value="{!city}"/>&nbsp;
+  <apex:commandButton value="Find Account" action="{!doSearch}" rerender="out"/>
+  <apex:outputPanel id="out">
+  <apex:pageblock title="Accounts">
+  <apex:pageblockTable value="{!accwraplist}" var="acc">
+  <apex:column headerValue="Account Name" value="{!acc.name}"/>
+  <apex:column headerValue="Phone" value="{!acc.phone}"/>
+  <apex:column headerValue="city" value="{!acc.city}"/>
+  
+  </apex:pageblockTable>
+   </apex:pageblock>
+   </apex:outputPanel>
+   </apex:actionRegion>
+      <apex:pageBlock title="New Customer">
+       <apex:pageBlockSection title="Personal Information" columns="1">
+       
+       <apex:inputField value="{!act.Name}"/>
+       <apex:inputField value="{!act.Phone}"/>
+       </apex:pageBlockSection>
+       <apex:pageBlockSection title="Address Information" columns="1">
+       <apex:inputField value="{!act.Billingcountry}"/>
+       <apex:inputField value="{!act.BillingCity}"/>
+       
+       </apex:pageBlockSection>
+       <apex:pageBlockSection title="Additional Information">
+       
+       <apex:inputField value="{!act.Description}"/>
+       </apex:pageBlockSection>
+      <apex:pageblockButtons >
+      <apex:commandButton value="Save" action="{!doSave}"/>
+      </apex:pageblockButtons>
+      
+      </apex:pageBlock>
+  
+  </apex:form>
+</apex:page>

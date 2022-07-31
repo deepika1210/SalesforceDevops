@@ -1,0 +1,117 @@
+<apex:page controller="PaginationWithSelectAllClass">
+    
+    <apex:form id="form">
+        
+        <apex:actionFunction name="aSelectItem" action="{!doSelectItem}" rerender="pb">
+            <apex:param name="contextItem" value="" assignTo="{!contextItem}"/>
+        </apex:actionFunction>
+        <!-- handle deselected item -->
+        <apex:actionFunction name="aDeselectItem" action="{!doDeselectItem}" rerender="pb">
+            <apex:param name="contextItem" value="" assignTo="{!contextItem}"/>
+        </apex:actionFunction> 
+        
+        <apex:actionFunction name="isSelectAllItem" action="{!isSelectedAll}"  rerender="pb">
+            <apex:param name="isSelectedALL" value="" assignTo="{!selectedAllProperties}"/>
+        </apex:actionFunction>
+        
+        <apex:actionFunction name="updateQuantity" action="{!updateQuantity}" rerender="pb">
+            <apex:param name="contextItem" value="" assignTo="{!contextItem}"/>
+            <apex:param name="contextItemValue" value="" assignTo="{!contextItemValue}"/>
+        </apex:actionFunction>
+        
+        <apex:pageBlock title="Account Details" id="noRec" rendered="{! IF(AccountWraps != null && AccountWraps.size ==0 , true, false)}" >
+            <apex:outputPanel >
+                <h1>No Records Found </h1>
+            </apex:outputPanel>
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="Account Details" id="pb" rendered="{! IF( AccountWraps != null && AccountWraps.size >0, true, false)}" >
+            <apex:pageMessages ></apex:pageMessages>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save Selected" action="{!saveSelected}"/>                              
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockTable value="{!AccountWraps}" var="a" id="pbt">
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:inputCheckbox value="{!selectedAllProperties}" onclick="selectAllCheckboxes(this)" />
+                    </apex:facet> 
+                    <apex:inputCheckbox value="{!a.checked}" id="selectAll" styleClass="cbStyleClass" onclick="doCheckboxChange(this,'{!a.act.Id}')" />
+                </apex:column>
+                <apex:column headerValue="Agent Commission Percentage">
+                    <apex:inputText value="{!a.quantity}" onchange="updateTextChange(this, '{!a.act.Id}')"/>
+                </apex:column>
+                <apex:column headerValue="Account Name">
+                    <apex:outputLink target="_blank" value="/{!a.act.id}">{!a.act.Name}</apex:outputLink> 
+                </apex:column>  
+                <apex:column value="{!a.act.accountNumber}" headerValue="Account Number"/>  
+                <apex:column value="{!a.act.Industry}" headerValue="Industry"/>  
+                <apex:column value="{!a.act.AnnualRevenue}" headerValue="Annual Revenue"/>  
+                <apex:column value="{!a.act.Phone}" headerValue="Phone"/>   
+                <apex:column value="{!a.act.website}" headerValue="Web"/>    
+            </apex:pageBlockTable>
+            
+            <apex:outputPanel >
+                <br/>
+                <!-- count of selected items -->
+                <apex:outputLabel value="{!selectedCount} Accounts Selected" />
+            </apex:outputPanel>
+            <br/> 
+            <!--PAGINATION outputPanel-->
+            <apex:outputPanel rendered="{!AccountWraps.size>0}" styleClass="center">
+                <apex:commandButton status="st" reRender="pb" value="|< First" action="{!first}" disabled="{!!hasPrevious}" title="First Page"/>
+                <apex:commandButton status="st" reRender="pb" value="Previous" action="{!previous}" disabled="{!!hasPrevious}" title="Previous Page"/>
+                <apex:outputText > &nbsp;Page {!(pageNumber * size)+1-size} of {!IF((pageNumber * size)>noOfRecords, noOfRecords,(pageNumber * size))} of total {!noOfRecords}</apex:outputText>&nbsp;
+                <apex:commandButton status="st" reRender="pb" value="Next" action="{!next}" disabled="{!!hasNext}" title="Next Page"  />
+                <apex:commandButton status="st" reRender="pb" value="Last>|" action="{!last}" disabled="{!!hasNext}" title="Last Page"/>
+                
+                <apex:outputPanel style="color:#008000;font-weight:bold">
+                    <apex:actionStatus id="st" startText="Fetching..." stopText=""/>
+                </apex:outputPanel>
+            </apex:outputPanel> 
+        </apex:pageBlock>
+    </apex:form>
+    
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+       
+    //function to handle checkbox selection
+    function doCheckboxChange(cb,itemId)
+    {
+        if(cb.checked==true){
+            aSelectItem(itemId);
+        }
+        else{
+            aDeselectItem(itemId);
+        }        
+    }    
+    function selectAllCheckboxes(obj){
+        $(".cbStyleClass").each(function(index, item){
+            item.checked = obj.checked;
+        });
+        isSelectAllItem(obj.checked);
+        /*$(document).ready(function () { 
+    var oTable = $('#pbt').dataTable({
+        stateSave: true
+    });
+
+    var allPages = oTable.fnGetNodes();
+
+    $('body').on('click', '#selectAll', function () {
+        if ($(this).hasClass('allChecked')) {
+            $('input[type="checkbox"]', allPages).prop('checked', false);
+        } else {
+            $('input[type="checkbox"]', allPages).prop('checked', true);
+        }
+        $(this).toggleClass('allChecked');
+    })
+});*/
+    }
+    
+    function updateTextChange(obj, itemId){
+        
+        updateQuantity(itemId, $(obj).val());
+    }
+    </script>
+    
+</apex:page>

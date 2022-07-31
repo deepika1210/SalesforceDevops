@@ -1,0 +1,14 @@
+<apex:page controller="renderedExampleController">
+
+<apex:form >
+  <apex:pageBlock >
+  <apex:commandButton value="Click me to set render attribute to true to show pageblock table " action="{!ShowPB}"/>
+  </apex:pageBlock>
+
+<apex:pageBlock rendered="{!PBFlag}">
+  Account Name :<apex:outputField value="{!accRec[0].name}"/>
+  <br/>
+  Account Number :<apex:outputField value="{!accRec[0].accountnumber}"/>
+  </apex:pageBlock>
+  </apex:form>
+  </apex:page>

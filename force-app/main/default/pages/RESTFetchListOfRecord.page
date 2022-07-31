@@ -1,0 +1,16 @@
+<apex:page controller="RESTFetchListOfRecordsController">
+  <apex:form >
+<apex:pageBlock >
+
+ <apex:pageblockButtons >
+ <apex:commandButton value="Get Account List" action="{!getConList}"/>
+
+ </apex:pageblockButtons>
+  <apex:pageblocktable value="{!listWrap}" var="a" >
+
+<apex:column value="{!a.name}" headerValue="Name"/>
+</apex:pageBlockTable>
+
+ </apex:pageBlock>
+ </apex:form>
+</apex:page>

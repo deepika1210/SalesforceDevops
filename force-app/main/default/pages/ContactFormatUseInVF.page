@@ -1,0 +1,32 @@
+<apex:page standardController="Contact">
+ <apex:includeLightning />
+
+        <div id="Con" />
+
+         <script>
+
+            $Lightning.use("c:ContactFormatUseInVFApp", function() {
+
+                $Lightning.createComponent(
+
+                    "c:ContactFormatuseInVF",
+
+                    {},
+
+                    "Con",
+
+                    function(cmp) {
+
+                        console.log("Component is created!");
+
+                        console.log(cmp);
+
+                    });
+
+                });
+
+        
+
+          </script>
+
+    </apex:page>

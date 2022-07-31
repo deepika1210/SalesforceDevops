@@ -1,0 +1,21 @@
+<apex:page >
+    <head>
+        
+        <script>
+        $(":button").click(function(){
+    var $lastRow = $("[id$=blah] tr:not('.ui-widget-header'):last"); //grab row before the last row
+    var $newRow = $lastRow.clone(); //clone it
+    $newRow.find(":text").val(""); //clear out textbox values    
+    $lastRow.after($newRow); //add in the new row at the end
+});
+        
+        </script>
+    </head>
+    <table border='1' id='ct_blah'>
+    <tr><td>header</td><td><input type='text' /></td><td>more stuff</td></tr>
+    <tr><td>mid</td><td><input type='text' /></td><td>more stuff</td></tr>
+    <tr><td>last</td><td><input type='text' /></td><td>more stuff</td></tr>
+    <tr class="ui-widget-header"><td><input value="add" type='button' /></td><td></td><td></td></tr>
+    
+</table>
+</apex:page>
